@@ -10,7 +10,6 @@ phases:
   build:
     commands:
     - echo "Entered build phase"
-    - mvn -v
     - mvn clean
   post_build:
     commands:
