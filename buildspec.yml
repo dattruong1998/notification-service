@@ -17,5 +17,6 @@ phases:
     - mvn package
 artifacts:
   files:
+    - imagedefinitions.json
     - target/notification-service.jar
   discard-paths: yes
