@@ -1,12 +1,17 @@
-version: 0.2
 
+version: 0.2
 phases:
+  pre_build:
+    commands:
+    - echo "Entered the pre-build phase"
   build:
     commands:
-      - echo Entered the build phase...
+    - echo "Entered build phase"
+    - mvn clean
   post_build:
     commands:
-      - echo Build completed successfully
+    - echo "Entered the post-build phase"
+    - mvn package
 artifacts:
   files:
     - target/notification-service.jar
