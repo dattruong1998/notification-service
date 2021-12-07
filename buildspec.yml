@@ -1,26 +1,18 @@
-version: 0.2
 
+version: 0.2
 phases:
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - aws --version
-      - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 371900742504.dkr.ecr.ap-southeast-1.amazonaws.com
-      - REPOSITORY_URI=371900742504.dkr.ecr.ap-southeast-1.amazonaws.com/notification-microservice
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=${COMMIT_HASH:=latest}
+    - echo "Entered the pre-build phase"
   build:
     commands:
-      - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build -t notification-microservice .
-      - docker tag notification-microservice:latest 371900742504.dkr.ecr.ap-southeast-1.amazonaws.com/notification-microservice:latest
+    - echo "Entered build phase"
   post_build:
     commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker images...
-      - docker push 371900742504.dkr.ecr.ap-southeast-1.amazonaws.com/notification-microservice:latest
-      - echo Writing image definitions file...
-      - printf '[{"name":"hello-world","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+    - echo "Entered the post-build phase"
+    - mvn package
 artifacts:
-    files: imagedefinitions.json
+  files:
+    - imagedefinitions.json
+    - target/notification-service.jar
+  discard-paths: yes
