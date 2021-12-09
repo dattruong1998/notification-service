@@ -8,6 +8,6 @@ public class NotificationController {
 	
    @GetMapping("/")	
    public String getAll() {
-	   return "Hello";
+	   return "Hello Employee";
    }
 }
